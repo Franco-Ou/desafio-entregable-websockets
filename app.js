@@ -18,34 +18,29 @@ const Contenedor = require("./contenedor.js");
 const contenedorDeProductos = new Contenedor("productos.txt");
 contenedorDeProductos.initializer();
 
-let counter = 0;
-
 let messages = [];
 
 let products = [];
 
 
 io.on("connection", (socket) => {
-    counter++;
-    console.log("New user, number: ", counter);
+
     socket.emit('messages', messages);
     
     socket.on('new-message', data => {
         messages.push(data);
-        io.sockets.emit('messages', [data]) //io.sockets permite que todos los conectados vean el mensaje. socket.emit solo permite a uno verlo.
+        io.sockets.emit('messages', [data]) 
     })
 
     socket.on('new-product', data => {
         products.push(data);
-        console.log("se pusheó");
-        io.sockets.emit('products', [data]) //io.sockets permite que todos los conectados vean el mensaje. socket.emit solo permite a uno verlo.
+        io.sockets.emit('products', [data]) 
     })
 })
 
 app.get("/", async (req, res) => {
   try {
-    const allItems = await contenedorDeProductos.getAll();
-    res.render("index", { listaDeProductos: products });
+    res.render("index", products);
   } catch (error) {
     console.log(error);
   }

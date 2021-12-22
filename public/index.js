@@ -10,18 +10,6 @@ socket.on('products', data => {
     renderProducts(data);
 })
 
-/* $(document).ready(function() {
-    if(dataStart === "") {
-        $("#no-products-found").append(`
-        <div id="no-products-found" class="d-flex justify-content-center">
-           <div class="p-5" style="background-color: #3E7FB9; width: fit-content"><h2>No se encontraron productos</h2></div>
-       </div> 
-        `)
-    } 
-}); */
-
-
-
 const renderMessages = (data) => {
     data.forEach((info) => {
         $("#messages").prepend(`
@@ -36,7 +24,6 @@ const renderMessages = (data) => {
 const renderProducts = (data) => {
 
     if(data !== {} && data[0].name !== "" && data[0].price !== "" && data[0].photo !== "") {
-    dataStart = data;  
     data.forEach((product) => {
         $("#products").prepend(`
             <tr>
